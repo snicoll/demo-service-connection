@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/demo-service-connection"
+    username: "spring"
+    password: "secret"
+  sql:
+    init:
+      mode: always
