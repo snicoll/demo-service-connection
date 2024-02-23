@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: demo-service-connection
   datasource:
     url: "jdbc:postgresql://localhost:5432/demo-service-connection"
     username: "spring"
@@ -6,3 +8,12 @@ spring:
   sql:
     init:
       mode: always
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics

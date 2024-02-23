@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: postgres
     image: postgres:16.1-alpine
+    container_name: postgres
     restart: unless-stopped
     environment:
       - POSTGRES_DB=demo-service-connection
@@ -12,7 +12,38 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres-storage:/var/lib/postgresql/data
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    volumes:
+      - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - grafana-storage:/var/lib/grafana
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - prometheus-storage:/var/lib/prometheus/data
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+  zipkin:
+    image: 'openzipkin/zipkin:latest'
+    container_name: zipkin
+    restart: unless-stopped
+    ports:
+      - '9411:9411'
+
 volumes:
-  postgres:
-    driver: local
+  postgres-storage:
+  grafana-storage:
+  prometheus-storage:
+

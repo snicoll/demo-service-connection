@@ -1,0 +1,15 @@
+datasources:
+- name: prometheus
+  type: prometheus
+  typeName: Prometheus
+  typeLogoUrl: /public/app/plugins/datasource/prometheus/img/prometheus_logo.svg
+  access: proxy
+  url: http://host.docker.internal:9090
+  isDefault: true
+- name: zipkin
+  type: zipkin
+  typeName: Zipkin
+  typeLogoUrl: /public/app/plugins/datasource/zipkin/img/zipkin-logo.svg
+  access: proxy
+  url: http://host.docker.internal:9411
+  isDefault: false
